@@ -21,7 +21,7 @@ class Clean(discord.Client):
                 self.ginfos[guild.id] = infos.GuildInfos(guild.id, settings.guilds[guild.id])
 
     async def on_message(self, message):
-        print("Received message!")
+        print("Received message: " + str(message.content))
     
         if message.author.bot or message.content == "":
             return
@@ -45,12 +45,12 @@ class Clean(discord.Client):
         }
         
         if message.content in options.keys():
-            options[message.content](message)
+            await options[message.content](message)
             return
 
         for elem in complex_options:
             if message.content.startswith(elem[0]):
-                complex_options[elem[0]](message)
+                await complex_options[elem[0]](message)
                 return
 
     async def delete_message(self, message):
