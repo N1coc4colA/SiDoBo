@@ -18,28 +18,39 @@ def build_guild(varn: str, default: str) -> dict:
 
 
 token = ""
-test_token = ""
-guilds = {}
-test_guilds = {}
 admins = []
+bans = []
+guilds = []
 
 
-def load():
-    global token, test_token, guilds, test_guilds, admins
+def remove_empty(lst) -> list:
+    return list(filter(lambda a: a != "", lst))
+
+
+def load() -> None:
+    global token, bans, admins
 
     load_dotenv()
 
     token = os.environ.get("DISCORD_AKEY", "")
-    test_token = os.environ.get("DISCORD_TAKEY", "")
-
-    guilds = build_guild("DISCORD_GUILDS", "")
-    test_guilds = build_guild("DISCORD_TGUILDS", "")
-
-    admins = os.environ.get("DISCORD_IDS", "").split(";")
+    admins = remove_empty(os.environ.get("ADMIN_IDS", "").split(";"))
+    bans = remove_empty(os.environ.get("BANNED_IDS", "").split(";"))
 
     print(f"Token: {token}")
-    print(f"Test token: {test_token}")
-    print(f"Guilds: {guilds}")
-    print(f"TGuilds: {test_guilds}")
     print(f"Admins: {admins}")
+
+
+def get_admins() -> list:
+    global admins
+    return admins
+
+
+def get_guilds() -> list:
+    global guilds
+    return guilds
+
+
+def get_bans() -> list:
+    global bans
+    return bans
 

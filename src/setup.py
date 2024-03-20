@@ -1,9 +1,17 @@
 import os
 
-def load():
-    if not os.path.exists("./resources/"):
-        print("Creating directory to store data: ./resources")
-        os.mkdir("./resources/")
-        if not os.path.exists("./resources/"):
-            print("Failed to create resources directory.")
+
+def make_directory(fp: str) -> None:
+    if not os.path.exists(fp):
+        print(f"> Creating directory to store data: {fp}")
+        os.mkdir(fp)
+        if not os.path.exists(fp):
+            print(f"> Failed to create {fp} directory.")
+        else:
+            print(f"> Created directory {fp}")
+
+
+def load() -> None:
+    make_directory("./logs/")
+    make_directory("./resources/")
 
